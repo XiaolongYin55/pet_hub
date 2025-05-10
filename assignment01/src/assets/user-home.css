@@ -1,0 +1,82 @@
+/* user-home.css */
+
+/* Header styles */
+header {
+  background-color: #f8f8f8;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+header h2 {
+  margin: 0;
+}
+
+button {
+  padding: 8px 15px;
+  margin-top: 10px;
+  cursor: pointer;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+/* Layout Styles */
+.layout {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.sidebar {
+  width: 20%;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+  position: relative;
+    top: -18px;
+    left: -20px;
+        height: 319px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin: 10px 0;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: #333;
+}
+
+.sidebar a:hover {
+  color: #4CAF50;
+}
+
+/* Main content area */
+.content {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+/* Footer Styles */
+.footer {
+  background-color: #f8f8f8;
+  padding: 15px;
+  text-align: center;
+  border-top: 1px solid #ddd;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.product-list {
+position: relative;
+    top: -37px;
+    left: -15px;
+}
