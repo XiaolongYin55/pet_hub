@@ -34,11 +34,8 @@ import { useCartStore } from '@/stores/cart';
 const cartStore = useCartStore();
 const router = useRouter();
 
-// 从 sessionStorage 中获取 laptops 数据
 const productData = JSON.parse(sessionStorage.getItem("productData") || '{}');
 const laptops = ref(productData.laptops || []);
-
-// 添加到购物车
 function addToCart(item) {
 cartStore.addToCart(item);
 }

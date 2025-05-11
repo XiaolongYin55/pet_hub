@@ -195,7 +195,7 @@ button:hover {
     bottom: 82px;
   width: 100%;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-      z-index: 10; /* 设置较高的层级，使其在 sidebar 之前显示 */
+      z-index: 10; 
 }
 
 .footer p {

@@ -30,27 +30,15 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-
+import { useCartStore } from '@/stores/cart';
+const cartStore = useCartStore();
 const router = useRouter();
 
 // 从 sessionStorage 中获取 laptops 数据
 const productData = JSON.parse(sessionStorage.getItem("productData") || '{}');
 const accessories = ref(productData.accessories || []);
-
-// 添加到购物车
 function addToCart(item) {
-  let cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
-  
-  // 查找是否已存在相同 id 商品
-  const existingItem = cart.find(cartItem => cartItem.id === item.id && cartItem.name === item.name);
-  if (existingItem) {
-    existingItem.quantity += 1;
-  } else {
-    cart.push({ ...item });
-  }
-
-  sessionStorage.setItem('cart', JSON.stringify(cart));
-  alert(`${item.name} added to cart!`);
+cartStore.addToCart(item);
 }
 </script>
 
