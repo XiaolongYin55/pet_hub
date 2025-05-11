@@ -6,6 +6,7 @@
         "brand": "Apple",
         "quantity": 1,
         "image": "e1.jpg",
+        "category": "accessories",
         "totalPrice": 0
     },
     {
@@ -15,6 +16,7 @@
         "brand": "Samsung",
         "quantity": 1,
         "image": "e2.jpg",
+        "category": "accessories",
         "totalPrice": 0
     },
     {
@@ -24,6 +26,7 @@
         "brand": "Sony",
         "quantity": 1,
         "image": "e3.jpg",
+        "category": "accessories",
         "totalPrice": 0
     },
     {
@@ -33,6 +36,7 @@
         "brand": "JBL",
         "quantity": 1,
         "image": "e4.jpg",
+        "category": "accessories",
         "totalPrice": 0
     }
 ]

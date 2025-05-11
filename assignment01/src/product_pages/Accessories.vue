@@ -41,7 +41,6 @@ const error = ref(null);
 
 onMounted(async () => {
   try {
-    // 从路由路径获取分类名
     const category = route.path.split('/').pop();
     accessories.value = await productsService.getProductsByCategory(category);
   } catch (err) {
@@ -51,7 +50,10 @@ onMounted(async () => {
     isLoading.value = false;
   }
 });
+
+// 添加商品到购物车
 function addToCart(item) {
+  item.category = 'accessories'; // 确保商品的分类信息
   cartStore.addToCart(item);
 }
 </script>

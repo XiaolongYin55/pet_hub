@@ -6,6 +6,7 @@
         "brand": "Apple",
         "quantity": 1,
         "image": "l1.jpg",
+        "category": "laptops",
         "totalPrice": 0
     },
     {
@@ -15,6 +16,7 @@
         "brand": "Dell",
         "quantity": 1,
         "image": "l2.jpg",
+        "category": "laptops",
         "totalPrice": 0
     },
     {
@@ -24,6 +26,7 @@
         "brand": "HP",
         "quantity": 1,
         "image": "l3.jpg",
+        "category": "laptops",
         "totalPrice": 0
     },
     {
@@ -33,6 +36,7 @@
         "brand": "Microsoft",
         "quantity": 1,
         "image": "l4.jpg",
+        "category": "laptops",
         "totalPrice": 0
     }
 ]

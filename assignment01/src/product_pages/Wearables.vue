@@ -53,6 +53,7 @@ onMounted(async () => {
 });
 
 function addToCart(item) {
+    item.category = 'wearables'; // 或根据需要修改为其他分类
   cartStore.addToCart(item);
 }
 </script>
