@@ -28,18 +28,34 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import { useCartStore } from '@/stores/cart';
-const cartStore = useCartStore();
-const router = useRouter();
+import productsService from '@/services/products';
 
-const productData = JSON.parse(sessionStorage.getItem("productData") || '{}');
-const laptops = ref(productData.laptops || []);
+const cartStore = useCartStore();
+const route = useRoute();
+const laptops = ref([]);
+const isLoading = ref(true);
+const error = ref(null);
+
+onMounted(async () => {
+  try {
+    const category = route.path.split('/').pop(); // "laptops"
+    laptops.value = await productsService.getProductsByCategory(category);
+  } catch (err) {
+    error.value = `Failed to load products: ${err.message}`;
+    console.error(err);
+  } finally {
+    isLoading.value = false;
+  }
+});
+
 function addToCart(item) {
-cartStore.addToCart(item);
+  cartStore.addToCart(item);
 }
 </script>
+
 
 <style scoped src="@/assets/user-home.css"></style>
 

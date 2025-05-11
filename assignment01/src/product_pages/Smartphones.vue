@@ -29,18 +29,31 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import { useCartStore } from '@/stores/cart';
-const router = useRouter();
-const cartStore = useCartStore();
+import productsService from '@/services/products';
 
-// 从 sessionStorage 中获取 laptops 数据
-const productData = JSON.parse(sessionStorage.getItem("productData") || '{}');
-const smartphones = ref(productData.smartphones || []);
+const cartStore = useCartStore();
+const route = useRoute();
+const smartphones = ref([]);
+const isLoading = ref(true);
+const error = ref(null);
+
+onMounted(async () => {
+  try {
+    const category = route.path.split('/').pop(); // "smartphones"
+    smartphones.value = await productsService.getProductsByCategory(category);
+  } catch (err) {
+    error.value = `Failed to load products: ${err.message}`;
+    console.error(err);
+  } finally {
+    isLoading.value = false;
+  }
+});
 
 function addToCart(item) {
-cartStore.addToCart(item);
+  cartStore.addToCart(item);
 }
 </script>
 

@@ -36,22 +36,19 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { computed } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useCartStore } from '@/stores/cart';
 
-const cart = ref([]);
-
-function loadCart() {
-  cart.value = JSON.parse(sessionStorage.getItem('cart') || '[]');
-}
-
-function saveCart() {
-  sessionStorage.setItem('cart', JSON.stringify(cart.value));
-}
+const cartStore = useCartStore();
+const { cart } = storeToRefs(cartStore); // 响应式绑定
 
 function increase(id) {
   const item = cart.value.find(i => i.id === id);
-  if (item) item.quantity++;
-  saveCart();
+  if (item) {
+    item.quantity++;
+    sessionStorage.setItem('cart', JSON.stringify(cart.value)); // 保持同步
+  }
 }
 
 function decrease(id) {
@@ -62,18 +59,13 @@ function decrease(id) {
     } else {
       cart.value.splice(index, 1);
     }
-    saveCart();
+    sessionStorage.setItem('cart', JSON.stringify(cart.value));
   }
 }
 
-const total = ref(0);
-watch(cart, () => {
-  total.value = cart.value.reduce((sum, item) => sum + item.price * item.quantity, 0);
-}, { deep: true });
-
-onMounted(() => {
-  loadCart();
-});
+// 计算总价
+const total = computed(() =>
+  cart.value.reduce((sum, item) => sum + item.price * item.quantity, 0)
+);
 </script>
-
 <style scoped src="@/assets/user-home.css"></style>
