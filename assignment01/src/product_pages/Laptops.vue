@@ -9,13 +9,13 @@
           <th>Price</th>
           <th>Brand</th>
           <th>FREE Delivery</th>
-          <th>Action</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in laptops" :key="item.id">
           <td>{{ item.id }}</td>
-          <td><img :src="`/images/${item.image}`" alt="item" width="50" /></td>
+          <td><img :src="`/images/${item.image}`" alt="item" width="60px" /></td>
           <td>{{ item.name }}</td>
           <td>${{ item.price }}</td>
           <td>{{ item.brand }}</td>
@@ -30,7 +30,8 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-
+import { useCartStore } from '@/stores/cart';
+const cartStore = useCartStore();
 const router = useRouter();
 
 // 从 sessionStorage 中获取 laptops 数据
@@ -39,39 +40,9 @@ const laptops = ref(productData.laptops || []);
 
 // 添加到购物车
 function addToCart(item) {
-  let cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
-  
-  // 查找是否已存在相同 id 商品
-  const existingItem = cart.find(cartItem => cartItem.id === item.id && cartItem.name === item.name);
-  if (existingItem) {
-    existingItem.quantity += 1;
-  } else {
-    cart.push({ ...item });
-  }
-
-  sessionStorage.setItem('cart', JSON.stringify(cart));
-  alert(`${item.name} added to cart!`);
+cartStore.addToCart(item);
 }
 </script>
 
-<style scoped>
-.product-list {
-  padding: 20px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th, td {
-  padding: 8px;
-  text-align: left;
-  border: 1px solid #ddd;
-}
-
-th {
-  background-color: #f2f2f2;
-}
-</style>
+<style scoped src="@/assets/user-home.css"></style>
 

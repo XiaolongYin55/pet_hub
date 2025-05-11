@@ -1,16 +1,42 @@
 <!-- Login.vue -->
 <template>
-  <div class="login-page">
-    <h1>Login to MyCartExpress</h1>
-    <form @submit.prevent="login">
-      <div>
-        <label for="username">Username:</label>
-        <input id="username" v-model="username" type="text" required /> <br>
-        <label for="Password">Password:</label>
-        <input id="password" v-model="password" type="password" required />
+  <div class="login-container">
+    <header class="header">
+      <h1>MyCartExpress</h1>
+    </header>
+
+    <div class="login-content">
+      <div class="login-box">
+        <h2>Welcome Back</h2>
+        <form @submit.prevent="login">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input 
+              id="username" 
+              v-model="username" 
+              type="text" 
+              required 
+              placeholder="Enter your username"
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input 
+              id="password" 
+              v-model="password" 
+              type="password" 
+              required 
+              placeholder="Enter your password"
+            />
+          </div>
+          <button type="submit" class="login-button">Login</button>
+        </form>
       </div>
-      <button type="submit">Login</button>
-    </form>
+    </div>
+
+    <footer class="footer">
+      <p>&copy; 2025 MyCartExpress. All rights reserved.</p>
+    </footer>
   </div>
 </template>
 
@@ -20,47 +46,14 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const username = ref('');
+const password = ref('');
 
 function login() {
   if (username.value) {
-    sessionStorage.setItem('username', username.value); // Store username in session
-    router.push('/user'); // Redirect to UserHome page
+    sessionStorage.setItem('username', username.value);
+    router.push('/user');
   }
 }
 </script>
 
-<style scoped>
-.login-page {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-
-.login-page h1 {
-  text-align: center;
-}
-
-.login-page form {
-  display: flex;
-  flex-direction: column;
-}
-
-.login-page form div {
-  margin-bottom: 10px;
-}
-
-.login-page form button {
-  margin-top: 10px;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-}
-
-.login-page form button:hover {
-  background-color: #0056b3;
-}
-</style>
+<style scoped src="@/assets/public-home.css"></style>

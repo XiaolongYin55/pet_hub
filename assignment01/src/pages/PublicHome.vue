@@ -3,11 +3,12 @@
   <div class="public-home">
     <header class="header">
       <h1>Welcome to MyCartExpress</h1>
+                <li><router-link to="/login">Sign In &nbsp; &nbsp;|</router-link></li>
+                <li><router-link to="/login">Sign Up</router-link></li>
     </header>
 
     <div class="content">
-      <p>Your one-stop shop for tech gadgets! Browse our collection of smartphones, laptops, accessories, and wearables.</p>
-      <button @click="login" class="login-button">Login</button>
+      <img src="/images/public_home2.jpg" alt="">
     </div>
 
     <footer class="footer">
@@ -18,12 +19,7 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
-
 const router = useRouter();
-function login() {
-  sessionStorage.setItem('username', 'john_doe');  // 模拟登录
-  router.push('/login');
-}
 </script>
 
-<style scoped src="./public-home.css"></style>
+<style scoped src="@/assets/public-home.css"></style>

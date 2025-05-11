@@ -15,7 +15,7 @@
       <tbody>
         <tr v-for="item in accessories" :key="item.id">
           <td>{{ item.id }}</td>
-          <td><img :src="`/images/${item.image}`" alt="item" width="50" /></td>
+          <td><img :src="`/images/${item.image}`" alt="item" width="60px" /></td>
           <td>{{ item.name }}</td>
           <td>${{ item.price }}</td>
           <td>{{ item.brand }}</td>
@@ -54,23 +54,4 @@ function addToCart(item) {
 }
 </script>
 
-<style scoped>
-.product-list {
-  padding: 20px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th, td {
-  padding: 8px;
-  text-align: left;
-  border: 1px solid #ddd;
-}
-
-th {
-  background-color: #f2f2f2;
-}
-</style>
+<style scoped src="@/assets/user-home.css"></style>

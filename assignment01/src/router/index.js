@@ -28,7 +28,7 @@ const routes = [
     children: [
       {
         path: '',
-        redirect: 'user/laptops' // 默认跳转到 laptops
+        redirect: 'user/smartphones' // 默认跳转到 laptops
       },
       {
         path: 'cart',

@@ -44,43 +44,7 @@ onMounted(() => {
 
   function submit() {
   sessionStorage.removeItem("cart");
-  router.push('/user');
+  router.push('/user/smartphones');
 }
-
-
 </script>
-
-
-
-<style scoped>
-.payment-container {
-  padding: 20px;
-  max-width: 500px;
-  margin: auto;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-label {
-  display: block;
-  font-weight: bold;
-}
-
-input {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  box-sizing: border-box;
-}
-
-.pay-button {
-  padding: 10px 20px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-</style>
+<style scoped src="@/assets/payment.css"></style>
