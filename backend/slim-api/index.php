@@ -31,6 +31,15 @@ function get_input_data() {
     return json_decode(file_get_contents('php://input'), true);
 }
 
+
+$app->group('/protected', function (\Slim\Routing\RouteCollectorProxy $group) use ($conn) {
+    $group->get('/user-data', function (Request $req, Response $res) use ($conn) {
+        $user = $req->getAttribute("user");  // 从 JWT 提取用户信息
+        $res->getBody()->write(json_encode(["message" => "Welcome, {$user->email}!"]));
+        return $res->withHeader('Content-Type', 'application/json');
+    });
+})->add("authenticate");
+
 // ✅ 这里添加 /login 路由
 $app->post('/login', function (Request $req, Response $res) use ($conn) {
     $data = json_decode($req->getBody()->getContents(), true);
@@ -49,13 +58,22 @@ $app->post('/login', function (Request $req, Response $res) use ($conn) {
         return $res->withHeader('Content-Type', 'application/json')->withStatus(401);
     }
 
-    $res->getBody()->write(json_encode(["success" => true, "user" => [
-        "id" => $user['id'],
-        "name" => $user['name'],
-        "email" => $user['email']
-    ]]));
-    return $res->withHeader('Content-Type', 'application/json')->withStatus(200);
+    // ✅ 生成 JWT token
+    require_once './jwt.php'; // 确保 jwt.php 已引入
+    $token = JwtHandler::generateToken($user['id'], $user['email'], 'user');
+
+    $res->getBody()->write(json_encode([
+        "success" => true,
+        "token" => $token,
+        "user" => [
+            "id" => $user['id'],
+            "name" => $user['name'],
+            "email" => $user['email']
+        ]
+    ]));
+    return $res->withHeader('Content-Type', 'application/json');
 });
+
 
 // ✅ 用户相关 API
 $app->get('/users', function (Request $req, Response $res) use ($conn) {

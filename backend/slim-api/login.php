@@ -1,5 +1,6 @@
 <?php
 require_once './config.php';
+require_once './jwt.php'; // 确保正确引入 JWT 处理类
 
 header("Content-Type: application/json");
 
@@ -22,9 +23,21 @@ if (!$user || $user['password'] !== $data['password']) {
     exit();
 }
 
-// 返回用户数据（不包括密码）
-echo json_encode(["success" => true, "user" => [
-    "id" => $user['id'],
-    "name" => $user['name'],
-    "email" => $user['email']
-]]);
+// 生成 JWT token
+$token = JwtHandler::generateToken($user['id'], $user['email']);
+error_log("Generated Token: " . var_export($token, true)); // 记录 token 结果
+
+
+// 返回用户数据及 token
+echo json_encode([
+    "success" => true,
+    "user" => [
+        "id" => $user['id'],
+        "name" => $user['name'],
+        "email" => $user['email']
+    ],
+    "token" => $token
+]);
+
+exit(); // 立即退出，确保数据正确返回
+

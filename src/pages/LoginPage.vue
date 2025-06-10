@@ -57,7 +57,11 @@ async function login() {
     });
 
     if (response.data.success) {
+      console.log("Token:", response.data.token);  // 打印 token
       sessionStorage.setItem('user', JSON.stringify(response.data.user));
+      sessionStorage.setItem('token', response.data.token); // 存储 token
+      console.log("Full Response:", response.data); // 打印完整响应
+      console.log("Token:", response.data?.token); 
       router.push('/user');
     } else {
       errorMessage.value = 'Invalid email or password';
@@ -67,5 +71,6 @@ async function login() {
     errorMessage.value = 'Login failed, please try again';
   }
 }
+
 </script>
 <style scoped src="@/assets/public-home.css"></style>
