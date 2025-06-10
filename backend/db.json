@@ -1,0 +1,44 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Lily Tan01",
+      "email": "lilytan@utm.my",
+      "role": "manager"
+    },
+    {
+      "id": "2",
+      "name": "Seman Rihan",
+      "email": "semrihan@utm.my",
+      "role": "sales"
+    },
+    {
+      "id": "9a23",
+      "name": "Lily Tan",
+      "email": "lilytan@utm.my",
+      "role": "manager"
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "name": "Laptop",
+      "price": 2999.99
+    },
+    {
+      "id": "3",
+      "name": "Phone",
+      "price": 1999.5
+    },
+    {
+      "id": "5",
+      "name": "Desk",
+      "price": 500
+    },
+    {
+      "id": "9",
+      "name": "Book",
+      "price": 45.5
+    }
+  ]
+}
