@@ -31,6 +31,32 @@ function get_input_data() {
     return json_decode(file_get_contents('php://input'), true);
 }
 
+// ✅ 这里添加 /login 路由
+$app->post('/login', function (Request $req, Response $res) use ($conn) {
+    $data = json_decode($req->getBody()->getContents(), true);
+
+    if (!isset($data['email']) || !isset($data['password'])) {
+        $res->getBody()->write(json_encode(["success" => false, "message" => "Missing email or password"]));
+        return $res->withHeader('Content-Type', 'application/json')->withStatus(400);
+    }
+
+    $stmt = $conn->prepare("SELECT id, name, email, password FROM users WHERE email = :email");
+    $stmt->execute([':email' => $data['email']]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$user || $user['password'] !== $data['password']) {
+        $res->getBody()->write(json_encode(["success" => false, "message" => "Invalid credentials"]));
+        return $res->withHeader('Content-Type', 'application/json')->withStatus(401);
+    }
+
+    $res->getBody()->write(json_encode(["success" => true, "user" => [
+        "id" => $user['id'],
+        "name" => $user['name'],
+        "email" => $user['email']
+    ]]));
+    return $res->withHeader('Content-Type', 'application/json')->withStatus(200);
+});
+
 // ✅ 用户相关 API
 $app->get('/users', function (Request $req, Response $res) use ($conn) {
     $stmt = $conn->query("SELECT * FROM users");

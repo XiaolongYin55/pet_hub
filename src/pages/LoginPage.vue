@@ -1,4 +1,3 @@
-<!-- Login.vue -->
 <template>
   <div class="login-container">
     <header class="header">
@@ -10,13 +9,13 @@
         <h2>Welcome Back</h2>
         <form @submit.prevent="login">
           <div class="form-group">
-            <label for="username">Username</label>
+            <label for="email">Email</label>
             <input 
-              id="username" 
-              v-model="username" 
-              type="text" 
+              id="email" 
+              v-model="email" 
+              type="email" 
               required 
-              placeholder="Enter your username"
+              placeholder="Enter your email"
             />
           </div>
           <div class="form-group">
@@ -43,17 +42,30 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import axios from 'axios';
 
 const router = useRouter();
-const username = ref('');
+const email = ref('');
 const password = ref('');
+const errorMessage = ref('');
 
-function login() {
-  if (username.value) {
-    sessionStorage.setItem('username', username.value);
-    router.push('/user');
+async function login() {
+  try {
+    const response = await axios.post('http://localhost:8080/login', {
+      email: email.value,
+      password: password.value
+    });
+
+    if (response.data.success) {
+      sessionStorage.setItem('user', JSON.stringify(response.data.user));
+      router.push('/user');
+    } else {
+      errorMessage.value = 'Invalid email or password';
+    }
+  } catch (error) {
+    console.error("Login failed:", error);
+    errorMessage.value = 'Login failed, please try again';
   }
 }
 </script>
-
 <style scoped src="@/assets/public-home.css"></style>
