@@ -2,7 +2,7 @@
 class db {
   private $dbuser = 'root';
   private $dbpass = ''; // 空密码
-  private $dbname = 'my_database';
+  private $dbname = 'pet-hub';
 
   function connect() {
     // 使用TCP连接（更稳定）

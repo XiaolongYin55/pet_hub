@@ -4,8 +4,7 @@ class db {
     private $port = 3306;        // XAMPP 默认端口
     private $dbuser = 'root';
     private $dbpass = '';        // XAMPP 默认密码为空
-    private $dbname = 'my_database'; // 请确保该数据库存在
-
+    private $dbname = 'pet-hub'; // 请确保该数据库存在
   function connect() {
     $dsn = "mysql:host={$this->host};port={$this->port};dbname={$this->dbname};charset=utf8mb4";
     $pdo = new PDO($dsn, $this->dbuser, $this->dbpass);

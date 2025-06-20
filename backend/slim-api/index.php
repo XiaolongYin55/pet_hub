@@ -1,46 +1,54 @@
 <?php
+
+require 'vendor/autoload.php';
+require_once '../config.php';
+
 use Slim\Factory\AppFactory;
 use Slim\Psr7\Factory\ResponseFactory;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
+// CORS
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
-// 处理 CORS 预检请求
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
 }
 
-require 'vendor/autoload.php';
-require_once '../config.php';
-
-// 设置 ResponseFactory（Slim 4 需要手动指定）
+// ✅ 创建 Slim 应用
 $responseFactory = new ResponseFactory();
 AppFactory::setResponseFactory($responseFactory);
 $app = AppFactory::create();
 
-// **正确获取数据库连接**
+// ✅ 连接数据库
 $db = new db();
 $conn = $db->connect();
 
-// **处理 JSON 输入**
+// ✅ --------------------------- 加载用户路由 -----------------------------------
+$addUserRoutes = require __DIR__ . '/routes/UserController.php';
+$addUserRoutes($app, $conn);
+$addAddressRoutes = require __DIR__ . '/routes/AddressController.php';
+$addAddressRoutes($app, $conn);
+
+
+// ✅ 工具函数：处理 JSON 输入
 function get_input_data() {
     return json_decode(file_get_contents('php://input'), true);
 }
 
-
+// ✅ 受保护的路由示例
 $app->group('/protected', function (\Slim\Routing\RouteCollectorProxy $group) use ($conn) {
     $group->get('/user-data', function (Request $req, Response $res) use ($conn) {
-        $user = $req->getAttribute("user");  // 从 JWT 提取用户信息
+        $user = $req->getAttribute("user");
         $res->getBody()->write(json_encode(["message" => "Welcome, {$user->email}!"]));
         return $res->withHeader('Content-Type', 'application/json');
     });
 })->add("authenticate");
 
-// ✅ 这里添加 /login 路由
+// ✅ 登录接口
 $app->post('/login', function (Request $req, Response $res) use ($conn) {
     $data = json_decode($req->getBody()->getContents(), true);
 
@@ -58,8 +66,7 @@ $app->post('/login', function (Request $req, Response $res) use ($conn) {
         return $res->withHeader('Content-Type', 'application/json')->withStatus(401);
     }
 
-    // ✅ 生成 JWT token
-    require_once './jwt.php'; // 确保 jwt.php 已引入
+    require_once './jwt.php';
     $token = JwtHandler::generateToken($user['id'], $user['email'], 'user');
 
     $res->getBody()->write(json_encode([
@@ -74,87 +81,6 @@ $app->post('/login', function (Request $req, Response $res) use ($conn) {
     return $res->withHeader('Content-Type', 'application/json');
 });
 
-
-// ✅ 用户相关 API
-$app->get('/users', function (Request $req, Response $res) use ($conn) {
-    $stmt = $conn->query("SELECT * FROM users");
-    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $res->getBody()->write(json_encode($users));
-    return $res->withHeader('Content-Type', 'application/json');
-});
-
-$app->post('/users', function (Request $req, Response $res) use ($conn) {
-    $data = get_input_data();
-    $stmt = $conn->prepare("INSERT INTO users (name, email, password) VALUES (:name, :email, :password)");
-    $stmt->execute([
-        ':name' => $data['name'],
-        ':email' => $data['email'],
-        ':password' => $data['password']
-    ]);
-    $res->getBody()->write(json_encode(["message" => "User created", "id" => $conn->lastInsertId()]));
-    return $res->withHeader('Content-Type', 'application/json');
-});
-
-// ✅ 产品相关 API
-$app->get('/products', function (Request $req, Response $res) use ($conn) {
-    $stmt = $conn->query("SELECT * FROM products");
-    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $res->getBody()->write(json_encode($products));
-    return $res->withHeader('Content-Type', 'application/json');
-});
-
-$app->post('/products', function (Request $req, Response $res) use ($conn) {
-    $data = get_input_data();
-    $stmt = $conn->prepare("INSERT INTO products (name, price) VALUES (:name, :price)");
-    $stmt->execute([':name' => $data['name'], ':price' => $data['price']]);
-    $res->getBody()->write(json_encode(["message" => "Product added"]));
-    return $res->withHeader('Content-Type', 'application/json');
-});
-
-$app->put('/products/{id}', function (Request $req, Response $res, array $args) use ($conn) {
-    $id = $args['id'];
-    $data = get_input_data();
-    $stmt = $conn->prepare("UPDATE products SET name = :name, price = :price WHERE id = :id");
-    $stmt->execute([':name' => $data['name'], ':price' => $data['price'], ':id' => $id]);
-    $res->getBody()->write(json_encode(["message" => "Product updated"]));
-    return $res->withHeader('Content-Type', 'application/json');
-});
-
-$app->delete('/products/{id}', function (Request $req, Response $res, array $args) use ($conn) {
-    $id = $args['id'];
-    $stmt = $conn->prepare("DELETE FROM products WHERE id = :id");
-    $stmt->execute([':id' => $id]);
-    $res->getBody()->write(json_encode(["message" => "Product deleted"]));
-    return $res->withHeader('Content-Type', 'application/json');
-});
-
-// ✅ 订单相关 API
-$app->get('/orders', function (Request $req, Response $res) use ($conn) {
-    $stmt = $conn->query("SELECT * FROM orders");
-    $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $res->getBody()->write(json_encode($orders));
-    return $res->withHeader('Content-Type', 'application/json');
-});
-
-$app->post('/orders', function (Request $req, Response $res) use ($conn) {
-    $data = get_input_data();
-    $stmt = $conn->prepare("INSERT INTO orders (userId, productId, quantity) VALUES (:userId, :productId, :quantity)");
-    $stmt->execute([
-        ':userId' => $data['userId'],
-        ':productId' => $data['productId'],
-        ':quantity' => $data['quantity']
-    ]);
-    $res->getBody()->write(json_encode(["message" => "Order placed"]));
-    return $res->withHeader('Content-Type', 'application/json');
-});
-
-$app->delete('/orders/{id}', function (Request $req, Response $res, array $args) use ($conn) {
-    $id = $args['id'];
-    $stmt = $conn->prepare("DELETE FROM orders WHERE id = :id");
-    $stmt->execute([':id' => $id]);
-    $res->getBody()->write(json_encode(["message" => "Order deleted"]));
-    return $res->withHeader('Content-Type', 'application/json');
-});
-
-// **运行 Slim API**
+// ✅ 启动 Slim 应用
 $app->run();
+
