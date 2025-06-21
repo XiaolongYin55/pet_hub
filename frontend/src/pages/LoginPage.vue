@@ -76,7 +76,7 @@ async function login() {
       sessionStorage.setItem('userId', user.id);
       sessionStorage.setItem('role', user.role);
 
-        // ✅ 保存 token（正确位置是 result.token）
+      // storage token
   if (result.token) {
     sessionStorage.setItem('token', result.token);
   }
