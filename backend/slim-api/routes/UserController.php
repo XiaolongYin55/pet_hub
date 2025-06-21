@@ -1,6 +1,4 @@
 <?php
-// routes/UserController.php
-// routes/UserController.php
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -9,7 +7,6 @@ require_once __DIR__ . '/../services/UserService.php';
 
 return function ($app, $pdo) {
     $service = new UserService($pdo);
-
     // 获取所有用户
     $app->get('/admin/get/users', function (Request $request, Response $response) use ($service) {
         $users = $service->getUsers();
@@ -77,7 +74,6 @@ return function ($app, $pdo) {
             $response->getBody()->write(json_encode(["error" => "Failed to delete user"]));
             return $response->withStatus(500);
         }
-
         return $response->withHeader('Content-Type', 'application/json');
     });
 };

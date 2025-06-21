@@ -9,6 +9,15 @@ class UserRepository
         $this->pdo = $pdo;
     }
 
+    public function findUserByUsernameAndPassword($username, $password) {
+    $stmt = $this->pdo->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
+    $stmt->execute([
+        ':username' => $username,
+        ':password' => $password
+    ]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
     public function getAllUsers()
     {
         $stmt = $this->pdo->query("SELECT * FROM users");

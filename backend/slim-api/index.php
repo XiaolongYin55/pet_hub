@@ -42,6 +42,9 @@ $addOrderItemRoutes = require __DIR__ . '/routes/OrderItemController.php';
 $addOrderItemRoutes($app, $conn);
 $addEventRoutes = require __DIR__ . '/routes/EventController.php';
 $addEventRoutes($app, $conn);
+$addAuthRoutes = require __DIR__ . '/routes/AuthController.php';
+$addAuthRoutes($app, $conn);
+require_once './middlewares/AuthMiddleware.php';
 
 
 // ✅ 工具函数：处理 JSON 输入
@@ -49,47 +52,49 @@ function get_input_data() {
     return json_decode(file_get_contents('php://input'), true);
 }
 
-// ✅ 受保护的路由示例
-$app->group('/protected', function (\Slim\Routing\RouteCollectorProxy $group) use ($conn) {
-    $group->get('/user-data', function (Request $req, Response $res) use ($conn) {
-        $user = $req->getAttribute("user");
-        $res->getBody()->write(json_encode(["message" => "Welcome, {$user->email}!"]));
+$app->group('/protected', function (\Slim\Routing\RouteCollectorProxy $group) {
+    $group->get('/user-data', function ($req, $res) {
+        $user = $req->getAttribute('user');
+        $res->getBody()->write(json_encode([
+            "message" => "Welcome, {$user->username}!",
+            "user" => $user
+        ]));
         return $res->withHeader('Content-Type', 'application/json');
     });
-})->add("authenticate");
+})->add('AuthMiddleware'); // 👈 添加中间件
 
 // ✅ 登录接口
-$app->post('/login', function (Request $req, Response $res) use ($conn) {
-    $data = json_decode($req->getBody()->getContents(), true);
+// $app->post('/login', function (Request $req, Response $res) use ($conn) {
+//     $data = json_decode($req->getBody()->getContents(), true);
 
-    if (!isset($data['email']) || !isset($data['password'])) {
-        $res->getBody()->write(json_encode(["success" => false, "message" => "Missing email or password"]));
-        return $res->withHeader('Content-Type', 'application/json')->withStatus(400);
-    }
+//     if (!isset($data['email']) || !isset($data['password'])) {
+//         $res->getBody()->write(json_encode(["success" => false, "message" => "Missing email or password"]));
+//         return $res->withHeader('Content-Type', 'application/json')->withStatus(400);
+//     }
 
-    $stmt = $conn->prepare("SELECT id, name, email, password FROM users WHERE email = :email");
-    $stmt->execute([':email' => $data['email']]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+//     $stmt = $conn->prepare("SELECT id, name, email, password FROM users WHERE email = :email");
+//     $stmt->execute([':email' => $data['email']]);
+//     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$user || $user['password'] !== $data['password']) {
-        $res->getBody()->write(json_encode(["success" => false, "message" => "Invalid credentials"]));
-        return $res->withHeader('Content-Type', 'application/json')->withStatus(401);
-    }
+//     if (!$user || $user['password'] !== $data['password']) {
+//         $res->getBody()->write(json_encode(["success" => false, "message" => "Invalid credentials"]));
+//         return $res->withHeader('Content-Type', 'application/json')->withStatus(401);
+//     }
 
-    require_once './jwt.php';
-    $token = JwtHandler::generateToken($user['id'], $user['email'], 'user');
+//     require_once './jwt.php';
+//     $token = JwtHandler::generateToken($user['id'], $user['email'], 'user');
 
-    $res->getBody()->write(json_encode([
-        "success" => true,
-        "token" => $token,
-        "user" => [
-            "id" => $user['id'],
-            "name" => $user['name'],
-            "email" => $user['email']
-        ]
-    ]));
-    return $res->withHeader('Content-Type', 'application/json');
-});
+//     $res->getBody()->write(json_encode([
+//         "success" => true,
+//         "token" => $token,
+//         "user" => [
+//             "id" => $user['id'],
+//             "name" => $user['name'],
+//             "email" => $user['email']
+//         ]
+//     ]));
+//     return $res->withHeader('Content-Type', 'application/json');
+// });
 
 // ✅ 启动 Slim 应用
 $app->run();
