@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "John Smith",
+    "age": 28,
+    "email": "john.smith@example.com",
+    "role": "member",
+    "joined_date": "2022-03-15",
+    "profile_image": "user1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Emily Johnson",
+    "age": 32,
+    "email": "emily.j@example.com",
+    "role": "premium_member",
+    "joined_date": "2021-07-22",
+    "profile_image": "user2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Michael Brown",
+    "age": 25,
+    "email": "michael.b@example.com",
+    "role": "member",
+    "joined_date": "2023-01-10",
+    "profile_image": "user3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Sarah Davis",
+    "age": 30,
+    "email": "sarah.d@example.com",
+    "role": "member",
+    "joined_date": "2022-11-05",
+    "profile_image": "user4.jpg"
+  }
+]

@@ -1,0 +1,52 @@
+[
+    {
+        "id": 1,
+        "name": "Buddy",
+        "price": 249,
+        "brand": "Dog",
+        "quantity": 1,
+        "image": "dog1.jpg",
+        "category": "dogs",
+        "totalPrice": 0
+    },
+    {
+        "id": 2,
+        "name": "Max",
+        "price": 199,
+        "brand": "Dog",
+        "quantity": 1,
+        "image": "dog2.jpg",
+        "category": "dogs",
+        "totalPrice": 0
+    },
+    {
+        "id": 3,
+        "name": "Whiskers",
+        "price": 350,
+        "brand": "Cat",
+        "quantity": 1,
+        "image": "cat1.jpg",
+        "category": "cats",
+        "totalPrice": 0
+    },
+    {
+        "id": 4,
+        "name": "Luna",
+        "price": 120,
+        "brand": "Cat",
+        "quantity": 1,
+        "image": "cat2.jpg",
+        "category": "cats",
+        "totalPrice": 0
+    },
+        {
+        "id": 5,
+        "name": "Tweety",
+        "price": 120,
+        "brand": "Bird",
+        "quantity": 1,
+        "image": "bird1.jpg",
+        "category": "birds",
+        "totalPrice": 0
+    }
+]

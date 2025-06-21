@@ -1,0 +1,46 @@
+<template>
+  
+  <div class="user-home">
+    <header>
+      <h2>Welcome, {{ username }}</h2>
+    </header>
+    
+    <div class="layout">
+      
+      <aside class="sidebar">
+        <ul>
+          <li><router-link to="/admin/smartphones">Users</router-link></li>
+          <li><router-link to="/admin/product">Products</router-link></li>
+          <li><router-link to="/admin/news">News</router-link></li>
+          <li><a href="#" @click.prevent="logout">Logout</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+        <router-view />
+      </main>
+    </div>
+    
+    <footer class="footer">
+      <p>&copy; 2025 MyCartExpress. All rights reserved.</p>
+    </footer>
+  </div>
+</template>
+
+<script setup>
+import { useRouter } from 'vue-router';
+
+const username = sessionStorage.getItem('username') || 'Guest';
+const router = useRouter();
+
+function logout() {
+  sessionStorage.removeItem('username');
+  sessionStorage.removeItem('userId');
+  sessionStorage.removeItem('role');
+  sessionStorage.removeItem('token');
+  router.push('/');
+}
+</script>
+
+
+<style scoped src="@/assets/user-home.css"></style>
