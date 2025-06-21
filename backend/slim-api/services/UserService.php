@@ -19,4 +19,18 @@ class UserService
     {
         return $this->userRepo->getUserById($id);
     }
+
+    public function updateUserWithAddress($data)
+    {
+        return $this->userRepo->updateUserWithAddress($data);
+    }
+    public function addUserWithAddress($data)
+    {
+        return $this->userRepo->addUserWithAddress($data);
+    }
+
+    public function deleteUserById($id)
+    {
+        return $this->userRepo->deleteUserById($id);
+    }
 }

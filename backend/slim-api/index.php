@@ -32,6 +32,16 @@ $addUserRoutes = require __DIR__ . '/routes/UserController.php';
 $addUserRoutes($app, $conn);
 $addAddressRoutes = require __DIR__ . '/routes/AddressController.php';
 $addAddressRoutes($app, $conn);
+$addProductRoutes = require __DIR__ . '/routes/ProductController.php';
+$addProductRoutes($app, $conn);
+$addContractRoutes = require __DIR__ . '/routes/ContractController.php';
+$addContractRoutes($app, $conn);
+$addOrderRoutes = require __DIR__ . '/routes/OrderController.php';
+$addOrderRoutes($app, $conn);
+$addOrderItemRoutes = require __DIR__ . '/routes/OrderItemController.php';
+$addOrderItemRoutes($app, $conn);
+$addEventRoutes = require __DIR__ . '/routes/EventController.php';
+$addEventRoutes($app, $conn);
 
 
 // ✅ 工具函数：处理 JSON 输入
