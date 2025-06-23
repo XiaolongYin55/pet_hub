@@ -47,7 +47,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const username = ref('');
 const password = ref('');
-
+//! ----------- version 01 ----------------------------
 async function login() {
   if (!username.value || !password.value) {
     alert('请输入用户名和密码');
