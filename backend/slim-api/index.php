@@ -44,6 +44,9 @@ $addEventRoutes = require __DIR__ . '/routes/EventController.php';
 $addEventRoutes($app, $conn);
 $addAuthRoutes = require __DIR__ . '/routes/AuthController.php';
 $addAuthRoutes($app, $conn);
+// ✅ 加入上传接口的注册
+$addUploadRoutes = require __DIR__ . '/routes/UploadController.php'; // ← 引入上传路由文件
+$addUploadRoutes($app, $conn); // ← 注册进 app
 require_once './middlewares/AuthMiddleware.php';
 
 

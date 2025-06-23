@@ -83,7 +83,7 @@ async function login() {
 
       // 根据 role 跳转
       if (user.role === 'admin') {
-        router.push('/admin/smartphones');
+        router.push('/admin/users');
       } else {
         router.push('/user/laptops');
       }

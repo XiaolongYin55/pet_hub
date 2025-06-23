@@ -9,12 +9,22 @@ import Dashboard from '../pages/Dashboard.vue';
 import MyCartPage from '../pages/MyCartPage.vue';
 import PaymentPage from '@/pages/PaymentPage.vue';
 import LoginPage from '@/pages/LoginPage.vue';
-import Laptops from '@/product_pages/Laptops.vue';
-import AdminProduct from '@/product_pages/AdminProduct.vue';
+import Laptops from '@/admin_pages/Laptops.vue';
+import AdminProduct from '@/admin_pages/AdminProduct.vue';
 
-import Smartphones from '@/product_pages/Smartphones.vue';
-import Wearables from '@/product_pages/Wearables.vue';
-import Accessories from '@/product_pages/Accessories.vue';
+import UserManage from '@/admin_pages/UserManage.vue';
+import UserUpdate from '@/admin_pages/UserUpdate.vue';
+import UserInsert from '@/admin_pages/UserInsert.vue'
+import ProductUpdate from '@/admin_pages/ProductUpdate.vue';
+import ProductInsert from '@/admin_pages/ProductInsert.vue';
+import EventManage from '@/admin_pages/EventManage.vue';
+import EventUpdate from '@/admin_pages/EventUpdate.vue';
+import EventInsert from '@/admin_pages/EventInsert.vue';
+
+
+
+import Wearables from '@/admin_pages/Wearables.vue';
+import Accessories from '@/admin_pages/Accessories.vue';
 import AdminNews from '@/pages/AdminNews.vue';
 const routes = [
   {
@@ -43,7 +53,7 @@ const routes = [
       {
         path: 'smartphones',
         name: 'Smartphones',
-        component: Smartphones,
+        component: UserManage,
       },
       {
         path: 'laptops',
@@ -84,17 +94,60 @@ const routes = [
     children: [
       {
         path: '',
-        redirect: 'smartphones'  // 默认跳转到 /admin/smartphones
+        redirect: 'users'
       },
       {
         path: 'cart',
         name: 'AdminMyCart',
         component: MyCartPage,
       },
+      //* -------------- USER MANAGEMENT ---------------------
       {
-        path: 'smartphones',
-        name: 'AdminSmartphones',
-        component: Smartphones,
+        path: 'users',
+        name: 'AdminUserManagement',
+        component: UserManage,
+      },
+      {
+        path: 'update/user',
+        name: 'AdminUserUpdate',
+        component: UserUpdate,
+      },
+      {
+        path: 'add/user',
+        name: 'AdminUserInsert',
+        component: UserInsert,
+      },
+      //* -------------- PRODUCT MANAGEMENT -------------------
+      {
+        path: 'product',
+        name: 'AdminProduct',
+        component: AdminProduct,
+      },
+      {
+        path: 'update/product',
+        name: 'AdminProductUpdate',
+        component: ProductUpdate,
+      },
+      {
+        path: 'add/product',
+        name: 'AdminProductInsert',
+        component: ProductInsert,
+      },
+      //* -------------- EVENTS MANAGEMENT -------------------
+      {
+        path: 'events',
+        name: 'AdminEventManage',
+        component: EventManage,
+      },
+      {
+        path: '/update/event',
+        name: 'AdminEventUpdate',
+        component: EventUpdate,
+      },
+      {
+        path: 'add/event',
+        name: 'AdminEventInsert',
+        component: EventInsert,
       },
       {
         path: 'laptops',
@@ -110,11 +163,6 @@ const routes = [
         path: 'wearables',
         name: 'AdminWearables',
         component: Wearables,
-      },
-      {
-        path: 'product',
-        name: 'AdminProduct',
-        component: AdminProduct,
       },
       {
         path: 'news',

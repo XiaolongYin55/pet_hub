@@ -64,16 +64,17 @@ return function ($app, $pdo) {
     });
 
     // 删除用户
-    $app->delete('/admin/delete/user/{id}', function (Request $request, Response $response, array $args) use ($service) {
-        $id = $args['id'];
-        $result = $service->deleteUserById($id);
+$app->delete('/admin/delete/user/{id}', function (Request $request, Response $response, array $args) use ($service) {
+    $id = $args['id'];
+    $result = $service->deleteUserById($id);
 
-        if ($result) {
-            $response->getBody()->write(json_encode(["message" => "User deleted successfully"]));
-        } else {
-            $response->getBody()->write(json_encode(["error" => "Failed to delete user"]));
-            return $response->withStatus(500);
-        }
-        return $response->withHeader('Content-Type', 'application/json');
-    });
+    if ($result) {
+        $response->getBody()->write(json_encode(["message" => "User deleted successfully"]));
+        return $response->withHeader('Content-Type', 'application/json'); // ✅ 要加这个
+    } else {
+        $response->getBody()->write(json_encode(["error" => "Failed to delete user"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+    }
+});
+
 };

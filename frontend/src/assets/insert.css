@@ -1,0 +1,151 @@
+/* 限定只影响resource-insert-form内的样式 */
+.resource-insert-form {
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f3f3f3;
+  /* position: absolute;
+  top: 10px; */
+
+  max-width: none; /* 取消最大宽度限制 */
+  width: auto; /* 宽度自适应 */
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* 确保行内元素正确排列 */
+.resource-insert-form .row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap; /* 允许换行 */
+  margin-bottom: 15px;
+  align-items: flex-end; /* 让所有元素底部对齐 */
+}
+
+/* 地址行也用flex */
+.resource-insert-form fieldset {
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.resource-insert-form fieldset legend {
+  font-weight: bold;
+  padding: 0 5px;
+}
+
+.resource-insert-form .address-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 10px;
+  flex-wrap: nowrap;
+  align-items: flex-end; /* 底部对齐 */
+}
+
+/* 控制字段组的基础宽度 */
+.resource-insert-form .field-group {
+  flex: 1; /* 平均分配空间 */
+  min-width: 200px; /* 设置最小宽度防止过窄 */
+  display: flex;
+  flex-direction: column;
+}
+
+/* 对于特别宽的字段（如描述） */
+.resource-insert-form .field-group[style*="flex: 3"] {
+  flex: 3 !important;
+}
+
+/* label和输入框上下排列，label固定高度 */
+.resource-insert-form label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  line-height: 1.2;
+  height: auto; /* 让label高度自适应 */
+  display: block;
+}
+
+/* 统一所有表单元素的样式和高度 */
+.resource-insert-form input,
+.resource-insert-form select,
+.resource-insert-form textarea {
+  padding: 8px 12px; /* 统一内边距 */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 0;
+  
+  /* 统一字体和行高 */
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.4;
+  
+  /* 统一高度 - 关键修复 */
+  height: 40px; /* 固定高度确保一致性 */
+  
+  /* 统一外观 */
+  background-color: #fff;
+  color: #333;
+  
+  /* 移除浏览器默认样式 */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* select特殊处理，添加下拉箭头 */
+.resource-insert-form select {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 8"><path fill="%23666" d="M6 8L0 2h12z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px;
+  padding-right: 36px; /* 为箭头留出空间 */
+}
+
+/* textarea需要特殊处理 */
+.resource-insert-form textarea {
+  height: auto; /* textarea允许自适应高度 */
+  min-height: 40px; /* 但最小高度与其他元素一致 */
+  resize: vertical; /* 只允许垂直调整大小 */
+}
+
+/* 聚焦状态 */
+.resource-insert-form input:focus,
+.resource-insert-form select:focus,
+.resource-insert-form textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* 按钮样式保持不变 */
+.resource-insert-form button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  align-self: flex-start; /* 按钮靠左 */
+  width: auto;
+  min-width: 100px;
+  margin-top: 10px;
+  height: 40px; /* 与其他元素高度一致 */
+  font-size: 14px;
+}
+
+.resource-insert-form button:hover {
+  background-color: #0056b3;
+}
+
+/* 禁用状态 */
+.resource-insert-form input:disabled,
+.resource-insert-form select:disabled,
+.resource-insert-form textarea:disabled {
+  background-color: #f5f5f5;
+  color: #666;
+  cursor: not-allowed;
+}
