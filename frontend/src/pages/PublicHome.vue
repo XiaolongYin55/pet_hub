@@ -4,7 +4,7 @@
     <header class="header">
       <h1>Welcome to Pet Adoption Hub</h1>
                 <li><router-link to="/login">Sign In &nbsp; &nbsp;|</router-link></li>
-                <li><router-link to="/login">Sign Up</router-link></li>
+                <li><router-link to="/register">Sign Up</router-link></li>
     </header>
 
     <div class="content">

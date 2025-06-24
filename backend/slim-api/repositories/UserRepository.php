@@ -178,4 +178,11 @@ class UserRepository
             return false;
         }
     }
+
+        public function isUsernameExists($username)
+    {
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM users WHERE username = :username");
+        $stmt->execute([':username' => $username]);
+        return $stmt->fetchColumn() > 0;
+    }
 }

@@ -12,6 +12,7 @@ import OwnerPublish from '@/pages/user_pages/OwnerPublish.vue';
 import ApplyAdoption from '@/pages/user_pages/ApplyAdoption.vue';
 import MyPublish from '@/pages/user_pages/MyPublish.vue';
 import ConfirmAdoption from '@/pages/user_pages/ConfirmAdoption.vue';
+import Register from '@/pages/Register.vue';
 
 import AdminHome from '@/pages/AdminHome.vue';
 import Dashboard from '../pages/Dashboard.vue';
@@ -44,156 +45,47 @@ const routes = [
     component: LoginPage,
   },
   {
+    path: '/register',
+    name: 'Register',
+    component: Register,
+  },
+  {
     path: '/user',
     component: UserHome,
     children: [
-      {
-        path: '',
-        redirect: 'products'  // 默认跳转到 /user/smartphones
-      },
-      {
-        path: 'products',
-        name: 'UserProducts',
-        component: UserProduct,
-      },
-      {
-        path: 'cart',
-        name: 'MyCart',
-        component: MyCart,
-      },
-      {
-        path: 'payment',
-        name: 'Payment',
-        component: Payment,
-      },
-    {
-      path: 'order_history',
-      name: 'OrderHistory',
-      component: OrderHistory,
-    },
-          //* -------------- ADOPTION SECTION ---------------------
-      {
-        path: 'adoptions',
-        name: 'AdoptionInfo',
-        component: AdoptionInfo,
-      },
-      {
-        path: 'owner_publish',
-        name: 'OwnerPublish',
-        component: OwnerPublish,
-      },
-      {
-        path: 'application',
-        name: 'ApplyAdoption',
-        component: ApplyAdoption,
-      },
-      {
-        path: 'my_publish',
-        name: 'MyPublish',
-        component: MyPublish,
-      },
-      {
-        path: 'confirm',
-        name: 'ConfirmAdoption',
-        component: ConfirmAdoption,
-      },
-
-      {
-        path: 'wearables',
-        name: 'Wearables',
-        component: Wearables,
-      },
-      {
-        path: 'news',
-        name: 'UserNews',
-        component: UserNews,
-      },
-      {
-        path: 'publish',
-        name: 'UserPublish',
-        component: UserPublish,
-      },
+      { path: '', redirect: 'products' },
+      { path: 'products', name: 'UserProducts', component: UserProduct },
+      { path: 'cart', name: 'MyCart', component: MyCart },
+      { path: 'payment', name: 'Payment', component: Payment },
+      { path: 'order_history', name: 'OrderHistory', component: OrderHistory },
+      { path: 'adoptions', name: 'AdoptionInfo', component: AdoptionInfo },
+      { path: 'owner_publish', name: 'OwnerPublish', component: OwnerPublish },
+      { path: 'application', name: 'ApplyAdoption', component: ApplyAdoption },
+      { path: 'my_publish', name: 'MyPublish', component: MyPublish },
+      { path: 'confirm', name: 'ConfirmAdoption', component: ConfirmAdoption },
+      { path: 'wearables', name: 'Wearables', component: Wearables },
+      { path: 'news', name: 'UserNews', component: UserNews },
+      { path: 'publish', name: 'UserPublish', component: UserPublish },
     ]
   },
   {
     path: '/admin',
     component: AdminHome,
     children: [
-      {
-        path: '',
-        redirect: 'users'
-      },
-
-      //* -------------- USER MANAGEMENT ---------------------
-      {
-        path: 'users',
-        name: 'AdminUserManagement',
-        component: UserManage,
-      },
-      {
-        path: 'update/user',
-        name: 'AdminUserUpdate',
-        component: UserUpdate,
-      },
-      {
-        path: 'add/user',
-        name: 'AdminUserInsert',
-        component: UserInsert,
-      },
-      //* -------------- PRODUCT MANAGEMENT -------------------
-      {
-        path: 'product',
-        name: 'AdminProduct',
-        component: AdminProduct,
-      },
-      {
-        path: 'update/product',
-        name: 'AdminProductUpdate',
-        component: ProductUpdate,
-      },
-      {
-        path: 'add/product',
-        name: 'AdminProductInsert',
-        component: ProductInsert,
-      },
-      //* -------------- EVENTS MANAGEMENT -------------------
-      {
-        path: 'events',
-        name: 'AdminEventManage',
-        component: EventManage,
-      },
-      {
-        path: '/update/event',
-        name: 'AdminEventUpdate',
-        component: EventUpdate,
-      },
-      {
-        path: 'add/event',
-        name: 'AdminEventInsert',
-        component: EventInsert,
-      },
-      //* -------------- ORDER MANAGEMENT -------------------
-            {
-        path: 'orders',
-        name: 'AdminOrders',
-        component: Orders,
-      },
-      //* -------------- ADOPTION MANAGEMENT -------------------
-      {
-        path: 'adoption_manage',
-        name: 'AdoptionManage',
-        component: AdoptionManage,
-      },
-      {
-        path: 'wearables',
-        name: 'AdminWearables',
-        component: Wearables,
-      },
-      {
-        path: 'news',
-        name: 'AdminNews',
-        component: AdminNews,
-      },
+      { path: '', redirect: 'users' },
+      { path: 'users', name: 'AdminUserManagement', component: UserManage },
+      { path: 'update/user', name: 'AdminUserUpdate', component: UserUpdate },
+      { path: 'add/user', name: 'AdminUserInsert', component: UserInsert },
+      { path: 'product', name: 'AdminProduct', component: AdminProduct },
+      { path: 'update/product', name: 'AdminProductUpdate', component: ProductUpdate },
+      { path: 'add/product', name: 'AdminProductInsert', component: ProductInsert },
+      { path: 'events', name: 'AdminEventManage', component: EventManage },
+      { path: 'update/event', name: 'AdminEventUpdate', component: EventUpdate },
+      { path: 'add/event', name: 'AdminEventInsert', component: EventInsert },
+      { path: 'orders', name: 'AdminOrders', component: Orders },
+      { path: 'adoption_manage', name: 'AdoptionManage', component: AdoptionManage },
+      { path: 'wearables', name: 'AdminWearables', component: Wearables },
+      { path: 'news', name: 'AdminNews', component: AdminNews },
     ]
   }
 ];
@@ -202,5 +94,34 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
+// ✅ 路由守卫
+router.beforeEach((to, from, next) => {
+  const publicPages = ['/', '/login', '/register'];
+  const token = sessionStorage.getItem('token');
+  const role = sessionStorage.getItem('role');
+
+  if (publicPages.includes(to.path)) {
+    return next();
+  }
+
+  if (!token) {
+    alert('请先登录');
+    return next('/login');
+  }
+
+  if (to.path.startsWith('/admin') && role !== 'admin') {
+    alert('Only administrators can access!');
+    return next('/user/products');
+  }
+
+  if (to.path.startsWith('/user') && role === 'admin') {
+    alert('Admin cannot access user resources!');
+    return next('/admin/users');
+  }
+
+  next();
+});
+
 export default router;
 

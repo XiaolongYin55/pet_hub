@@ -2,14 +2,17 @@
 require_once __DIR__ . '/../repositories/UserRepository.php';
 require_once __DIR__ . '/../jwt.php'; // 引入 JWT 工具类
 
-class AuthService {
+class AuthService
+{
     private $userRepo;
 
-    public function __construct($pdo) {
+    public function __construct($pdo)
+    {
         $this->userRepo = new UserRepository($pdo);
     }
 
-    public function login($username, $password) {
+    public function login($username, $password)
+    {
         $user = $this->userRepo->findUserByUsernameAndPassword($username, $password);
         if (!$user) return null;
 
@@ -28,5 +31,13 @@ class AuthService {
             'email' => $user['email']
         ];
     }
-}
+    public function addUserWithAddress($data)
+    {
+        return $this->userRepo->addUserWithAddress($data);
+    }
 
+    public function isUsernameExists($username)
+    {
+        return $this->userRepo->isUsernameExists($username);
+    }
+}
