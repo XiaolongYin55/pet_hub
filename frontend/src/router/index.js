@@ -3,15 +3,15 @@ import PublicHome from '../pages/PublicHome.vue';
 import UserHome from '../pages/UserHome.vue'
 import UserNews from '@/pages/UserNews.vue';
 import UserPublish from '@/pages/UserPublish.vue';
+import UserProduct from '@/pages/user_pages/UserProduct.vue';
+import MyCart from '@/pages/user_pages/MyCart.vue';
+import Payment from '@/pages/user_pages/Payment.vue';
+import OrderHistory from '@/pages/user_pages/OrderHistory.vue';
 
 import AdminHome from '@/pages/AdminHome.vue';
 import Dashboard from '../pages/Dashboard.vue';
-import MyCartPage from '../pages/MyCartPage.vue';
-import PaymentPage from '@/pages/PaymentPage.vue';
 import LoginPage from '@/pages/LoginPage.vue';
-import Laptops from '@/admin_pages/Laptops.vue';
 import AdminProduct from '@/admin_pages/AdminProduct.vue';
-
 import UserManage from '@/admin_pages/UserManage.vue';
 import UserUpdate from '@/admin_pages/UserUpdate.vue';
 import UserInsert from '@/admin_pages/UserInsert.vue'
@@ -20,6 +20,7 @@ import ProductInsert from '@/admin_pages/ProductInsert.vue';
 import EventManage from '@/admin_pages/EventManage.vue';
 import EventUpdate from '@/admin_pages/EventUpdate.vue';
 import EventInsert from '@/admin_pages/EventInsert.vue';
+import Orders from '@/admin_pages/Orders.vue';
 
 
 
@@ -43,22 +44,32 @@ const routes = [
     children: [
       {
         path: '',
-        redirect: 'laptops'  // 默认跳转到 /user/smartphones
+        redirect: 'products'  // 默认跳转到 /user/smartphones
+      },
+      {
+        path: 'products',
+        name: 'UserProducts',
+        component: UserProduct,
       },
       {
         path: 'cart',
         name: 'MyCart',
-        component: MyCartPage,
+        component: MyCart,
       },
+      {
+        path: 'payment',
+        name: 'Payment',
+        component: Payment,
+      },
+          {
+      path: 'order_history',
+      name: 'OrderHistory',
+      component: OrderHistory,
+    },
       {
         path: 'smartphones',
         name: 'Smartphones',
         component: UserManage,
-      },
-      {
-        path: 'laptops',
-        name: 'Laptops',
-        component: Laptops,
       },
       {
         path: 'accessories',
@@ -81,11 +92,6 @@ const routes = [
         name: 'UserPublish',
         component: UserPublish,
       },
-      {
-        path: 'payment',
-        name: 'PaymentPage',
-        component: PaymentPage,
-      },
     ]
   },
   {
@@ -96,11 +102,7 @@ const routes = [
         path: '',
         redirect: 'users'
       },
-      {
-        path: 'cart',
-        name: 'AdminMyCart',
-        component: MyCartPage,
-      },
+
       //* -------------- USER MANAGEMENT ---------------------
       {
         path: 'users',
@@ -149,10 +151,11 @@ const routes = [
         name: 'AdminEventInsert',
         component: EventInsert,
       },
-      {
-        path: 'laptops',
-        name: 'AdminLaptops',
-        component: Laptops,
+      //* -------------- ORDER MANAGEMENT -------------------
+            {
+        path: 'orders',
+        name: 'AdminOrders',
+        component: Orders,
       },
       {
         path: 'accessories',

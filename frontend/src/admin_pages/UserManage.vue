@@ -25,8 +25,8 @@
           <td>{{ user.email }}</td>
           <td>{{ user.phone_no }}</td>
           <td>
-             <button @click="manageUser(user)">Edit</button>
-            <button @click="deleteUser(user.id, user.image)" style="margin-left: 8px;">Delete</button>
+             <button  @click="manageUser(user)">Edit</button>
+            <button  @click="deleteUser(user.id, user.image)" style="margin-left: 8px;">Delete</button>
 
           </td>
          

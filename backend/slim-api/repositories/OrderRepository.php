@@ -31,16 +31,16 @@ class OrderRepository {
         return $order;
     }
 
-    public function getOrderByUsername($username) {
-    $stmt = $this->pdo->prepare("SELECT * FROM orders WHERE username = :username ORDER BY create_time DESC LIMIT 1");
+public function getOrdersByUsername($username) {
+    $stmt = $this->pdo->prepare("SELECT * FROM orders WHERE username = :username ORDER BY create_time DESC");
     $stmt->execute([':username' => $username]);
-    $order = $stmt->fetch(PDO::FETCH_ASSOC);
+    $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    if ($order) {
+    foreach ($orders as &$order) {
         $order['items'] = $this->getItemsByOrderId($order['order_id']);
     }
 
-    return $order;
+    return $orders;
 }
 
 
@@ -52,13 +52,12 @@ class OrderRepository {
 
     public function addOrder($data) {
     $stmt = $this->pdo->prepare("
-        INSERT INTO orders (user_id, username, address_id, total_price, create_time, update_time)
-        VALUES (:user_id, :username, :address_id, :total_price, NOW(), NOW())
+        INSERT INTO orders (user_id, username, total_price, create_time, update_time)
+        VALUES (:user_id, :username, :total_price, NOW(), NOW())
     ");
     $stmt->execute([
         ':user_id' => $data['user_id'],
         ':username' => $data['username'],
-        ':address_id' => $data['address_id'],
         ':total_price' => $data['total_price']
     ]);
     return $this->pdo->lastInsertId(); // 返回新订单 ID
@@ -69,7 +68,6 @@ public function updateOrder($data) {
         UPDATE orders SET 
             user_id = :user_id,
             username = :username,
-            address_id = :address_id,
             total_price = :total_price,
             update_time = NOW()
         WHERE order_id = :order_id
@@ -77,7 +75,6 @@ public function updateOrder($data) {
     return $stmt->execute([
         ':user_id' => $data['user_id'],
         ':username' => $data['username'],
-        ':address_id' => $data['address_id'],
         ':total_price' => $data['total_price'],
         ':order_id' => $data['order_id']
     ]);

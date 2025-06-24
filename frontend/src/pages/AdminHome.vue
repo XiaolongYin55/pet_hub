@@ -4,7 +4,8 @@
     <div class="main-container">
       <!-- 顶部横幅 -->
       <header class="banner">
-        <h1>Edu-Master @ Administrator Panel</h1>
+        <h1>Pet Adoption Hub @ Administrator Panel</h1>
+                <img :src="logo" alt="Pet Hub Logo" class="logo" />
       </header>
 
       <!-- 侧边栏 -->
@@ -40,8 +41,8 @@
     <!-- 页脚 -->
     <footer class="footer">
       <p>
-        &copy; {{ new Date().getFullYear() }} Edu-Master Admin Panel. All rights reserved. |
-        Managing Global Learning | Designed with 🔧 for Administrators
+        &copy; {{ new Date().getFullYear() }} Pet Adoption Hub. All rights reserved. |
+        Loving Homes for All Pets 🐶🐱
       </p>
     </footer>
   </div>
@@ -49,7 +50,7 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
-
+import logo from '@/assets/pet-hub-logo.png'; // ✅ 引入 logo 图片
 const username = sessionStorage.getItem('username') || 'Guest';
 const router = useRouter();
 

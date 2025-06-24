@@ -14,8 +14,15 @@
       </thead>
       <tbody>
         <tr v-for="item in cart" :key="`${item.id}-${item.category}`"> <!-- 唯一key -->
-          <td><img :src="`/images/${item.image}`" alt="item" width="50" /></td>
-          <td>{{ item.name }}</td>
+          <td>
+            <img
+              :src="`http://localhost:8081/${item.image}`"
+              alt="product image"
+              width="60"
+              class="table-img"
+            />
+          </td>
+          <td>{{ item.title }}</td>
           <td>${{ item.price }}</td>
           <td>{{ item.quantity }}</td>
           <td>${{ (item.price * item.quantity).toFixed(2) }}</td>
@@ -69,5 +76,4 @@ const total = computed(() =>
   cart.value.reduce((sum, item) => sum + item.price * item.quantity, 0)
 );
 </script>
-
-<style scoped src="@/assets/user-home.css"></style>
+<style scoped src="@/assets/details.css"></style>

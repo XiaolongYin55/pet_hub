@@ -48,8 +48,8 @@ button {
 }
 
 button:hover:not(:disabled) {
-  background-color: #007bff;
-  color: white;
+  background-color: #FFD814;
+  color: #2b022d;
 }
 
 button:disabled {

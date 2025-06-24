@@ -1,43 +1,28 @@
 <template>
   <div class="event-insert">
     <h2>Add New Event</h2>
-
-    <form @submit.prevent="submitInsert" class="resource-insert-form">
-      <div class="row">
-        <div class="field-group" style="width: 100%">
-          <label>Title:</label>
-          <input v-model="form.title" type="text" required style="max-width: 400px;" />
-        </div>
+    <form @submit.prevent="submitUpdate" class="resource-insert-form">
+      <div>
+        <label>Title:</label>
+        <input v-model="form.title" type="text" required />
       </div>
-
-      <div class="row">
-        <div class="field-group" style="width: 100%">
-          <label>Description:</label>
-          <textarea v-model="form.description" rows="4" required style="max-width: 400px;"></textarea>
-        </div>
+      <div>
+        <label>Description:</label>
+        <textarea v-model="form.description" required></textarea>
       </div>
-
-      <div class="row">
-        <div class="field-group" style="width: 100%">
-          <label>Image:</label>
-          <input type="file" @change="handleFile" style="max-width: 400px;" />
-          <img v-if="form.image" :src="`http://localhost:8081/${form.image}`" style="width: 150px; margin-top: 10px" />
-        </div>
+      <div>
+        <label>Image:</label>
+        <input v-model="form.image" type="text" />
       </div>
-
-      <div class="row">
-        <div class="field-group" style="width: 100%">
-          <label>Publisher:</label>
-          <input v-model="form.publisher" type="text" required style="max-width: 400px;" />
-        </div>
+      <div>
+        <label>Publisher:</label>
+        <input v-model="form.publisher" type="text" required />
       </div>
 
       <button type="submit">Add Event</button>
     </form>
   </div>
 </template>
-
-
 
 <script setup>
 import { ref } from 'vue'
@@ -88,12 +73,9 @@ const handleFile = async (e) => {
   form.value.image = data.imagePath;
 };
 </script>
-
-
-
+<style scoped src="@/assets/user-home.css"></style>
 <style scoped src="@/assets/initial.css"></style>
 <style scoped src="@/assets/insert.css"></style>
-
 <style scoped>
 .event-insert {
   display: flex;

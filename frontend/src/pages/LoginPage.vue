@@ -85,7 +85,7 @@ async function login() {
       if (user.role === 'admin') {
         router.push('/admin/users');
       } else {
-        router.push('/user/laptops');
+        router.push('/user/products');
       }
     } else {
       alert(result.message || '登录失败，请检查用户名或密码');

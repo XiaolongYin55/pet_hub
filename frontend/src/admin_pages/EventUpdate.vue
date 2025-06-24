@@ -1,40 +1,23 @@
 <template>
   <div class="event-update">
     <h2>Update Event</h2>
-
     <form @submit.prevent="submitUpdate" class="resource-insert-form">
-      <div class="row">
-        <div class="field-group">
-          <label>Title:</label>
-          <input v-model="form.title" type="text" required />
-        </div>
+      <div>
+        <label>Title:</label>
+        <input v-model="form.title" type="text" required />
       </div>
-
-      <div class="row">
-        <div class="field-group">
-          <label>Description:</label>
-          <textarea v-model="form.description" rows="4" required></textarea>
-        </div>
+      <div>
+        <label>Description:</label>
+        <textarea v-model="form.description" required></textarea>
       </div>
-
-      <div class="row">
-        <div class="field-group">
-          <label>Image:</label>
-          <input type="file" @change="handleFile" />
-          <img
-            v-if="form.image"
-            :src="`http://localhost:8081/${form.image}`"
-            style="width: 150px; margin-top: 10px"
-            alt="Preview"
-          />
-        </div>
+      <div>
+        <label>Image:</label>
+<input type="file" @change="handleFile" />
+<img v-if="form.image" :src="`http://localhost:8081/${form.image}`" style="max-width: 200px; margin-top: 10px;" />
       </div>
-
-      <div class="row">
-        <div class="field-group">
-          <label>Publisher:</label>
-          <input v-model="form.publisher" type="text" required />
-        </div>
+      <div>
+        <label>Publisher:</label>
+        <input v-model="form.publisher" type="text" required />
       </div>
 
       <button type="submit">Update</button>

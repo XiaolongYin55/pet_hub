@@ -22,10 +22,11 @@ class OrderService
         return $this->orderRepo->getOrderById($id);
     }
 
-    public function getOrderByUsername($username)
-    {
-        return $this->orderRepo->getOrderByUsername($username);
-    }
+public function getOrdersByUsername($username)
+{
+    return $this->orderRepo->getOrdersByUsername($username);
+}
+
 
 
     public function addOrder($data)

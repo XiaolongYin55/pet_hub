@@ -30,18 +30,19 @@ return function ($app, $pdo) {
         }
     });
 
-    $app->get('/user/get_order/by_username/{username}', function (Request $request, Response $response, array $args) use ($service) {
+$app->get('/user/get_orders/by_username/{username}', function (Request $request, Response $response, array $args) use ($service) {
     $username = $args['username'];
-    $order = $service->getOrderByUsername($username);
+    $orders = $service->getOrdersByUsername($username);
 
-    if ($order) {
-        $response->getBody()->write(json_encode($order));
+    if ($orders && count($orders) > 0) {
+        $response->getBody()->write(json_encode($orders));
         return $response->withHeader('Content-Type', 'application/json');
     } else {
-        $response->getBody()->write(json_encode(["error" => "No order found for username: $username"]));
+        $response->getBody()->write(json_encode(["error" => "No orders found for username: $username"]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
     }
 });
+
 
     // 添加订单
 $app->post('/user/add/order', function (Request $request, Response $response) use ($service) {
