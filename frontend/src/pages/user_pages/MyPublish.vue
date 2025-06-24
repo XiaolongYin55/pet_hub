@@ -19,7 +19,7 @@
           <tr>
             <td>{{ contract.id }}</td>
             <td>
-              <img :src="`http://localhost:8081/${contract.image}`" alt="contract image" width="60" />
+              <img :src="`http://localhost:8081/${contract.image}`" class="table-img" />
             </td>
             <td>{{ contract.title }}</td>
             <td>

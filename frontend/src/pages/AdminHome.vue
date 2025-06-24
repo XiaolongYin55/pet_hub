@@ -19,6 +19,7 @@
           <li><router-link to="/admin/events">Events</router-link></li>
           <!-- Orders -->
           <li><router-link to="/admin/orders">Orders</router-link></li>
+           <li><router-link to="/admin/adoption_manage">Adoptions</router-link></li>
           <!-- Logout -->
           <li><a href="#" @click.prevent="logout">Logout</a></li>
         </ul>

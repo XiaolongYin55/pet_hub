@@ -46,14 +46,14 @@
       <fieldset style="margin-top: 30px">
         <legend>Contract Info</legend>
         <div class="contract-row">
-          <div class="field-group">
+          <!-- <div class="field-group">
             <label>Title:</label>
             <input v-model="contract.title" type="text" />
           </div>
           <div class="field-group">
             <label>Description:</label>
             <input v-model="contract.description" type="text" />
-          </div>
+          </div> -->
           <div class="field-group">
             <label>Status:</label>
             <select v-model="contract.status">

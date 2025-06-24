@@ -1,64 +1,98 @@
 <template>
-  <div class="product-insert">
-    <h2>Add New Product</h2>
-
+  <div id="app">
     <form @submit.prevent="submitInsert" class="resource-insert-form">
-      <!-- 第一行：标题、价格、数量 -->
+      <!-- 每一行用 div.row 包起来 -->
       <div class="row">
         <div class="field-group">
-          <label>Title:</label>
-          <input v-model="form.title" type="text" required />
+          <label>Name:</label>
+          <input v-model="form.name" type="text" required />
         </div>
 
         <div class="field-group">
-          <label>Price:</label>
-          <input v-model="form.price" type="number" step="0.01" required />
+          <label>Username:</label>
+          <input v-model="form.username" type="text" required />
         </div>
 
         <div class="field-group">
-          <label>Quantity:</label>
-          <input v-model="form.quantity" type="number" required />
+          <label>Password:</label>
+          <input v-model="form.password" type="password" required />
         </div>
       </div>
 
-      <!-- 第二行：类别、津贴、图片上传 -->
       <div class="row">
         <div class="field-group">
-          <label>Category:</label>
-          <select v-model="form.category" required>
-            <option value="" disabled>Select a category</option>
-            <option value="Food">Food</option>
-            <option value="Health">Health</option>
-            <option value="Accessory">Accessory</option>
-          </select>
+          <label>Email:</label>
+          <input v-model="form.email" type="email" required />
         </div>
 
         <div class="field-group">
-          <label>Allowance %:</label>
-          <input v-model="form.allowance" type="number" />
+          <label>Phone No:</label>
+          <input v-model="form.phone_no" type="text" />
         </div>
 
         <div class="field-group">
           <label>Image:</label>
           <input type="file" @change="handleFile" />
-          <img
-            v-if="form.image"
-            :src="`http://localhost:8081/${form.image}`"
-            style="width: 150px; margin-top: 10px"
-            alt="Preview"
-          />
+          <img v-if="form.image" :src="`http://localhost:8081/${form.image}`" style="width: 150px; margin-top: 10px" />
         </div>
       </div>
 
-      <!-- 第三行：描述 -->
       <div class="row">
-        <div class="field-group" style="flex: 3 1 0">
-          <label>Description:</label>
-          <textarea v-model="form.description" rows="4" required></textarea>
+        <div class="field-group">
+          <label>Role:</label>
+          <select v-model="form.role">
+            <option value="admin">admin</option>
+            <option value="user">user</option>
+          </select>
         </div>
       </div>
 
-      <button type="submit">Add Product</button>
+      <!-- Address -->
+      <fieldset>
+        <legend>Address</legend>
+        <div class="address-row">
+          <div class="field-group">
+            <label>Country:</label>
+            <input v-model="form.address.country" type="text" />
+          </div>
+
+          <div class="field-group">
+            <label>State:</label>
+            <input v-model="form.address.state" type="text" />
+          </div>
+
+          <div class="field-group">
+            <label>City:</label>
+            <input v-model="form.address.city" type="text" />
+          </div>
+        </div>
+
+        <div class="address-row">
+          <div class="field-group">
+            <label>District:</label>
+            <input v-model="form.address.district" type="text" />
+          </div>
+
+          <div class="field-group">
+            <label>Street Address:</label>
+            <input v-model="form.address.street_address" type="text" />
+          </div>
+
+          <div class="field-group">
+            <label>Postal Code:</label>
+            <input v-model="form.address.postal_code" type="text" />
+          </div>
+        </div>
+
+        <div class="address-row">
+          <div class="field-group">
+            <label>Phone Number:</label>
+            <input v-model="form.address.phone_number" type="text" />
+          </div>
+        </div>
+      </fieldset>
+
+      <button class="center-button" type="submit">Create User</button>
     </form>
   </div>
 </template>
@@ -70,57 +104,59 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const form = ref({
-  title: '',
+  name: '',
+  username: '',
+  password: '',
   image: '',
-  price: '',
-  quantity: 0,
-  allowance: 0,
-  category: '',
-  description: ''
+  phone_no: '',
+  email: '',
+  role: 'user',
+  address: {
+    country: '',
+    state: '',
+    city: '',
+    district: '',
+    street_address: '',
+    postal_code: '',
+    phone_number: ''
+  }
 })
 
 const submitInsert = async () => {
   try {
-    const res = await fetch('http://localhost:8080/admin/add/product', {
+    const res = await fetch(`http://localhost:8080/admin/add/user`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form.value)
     })
-
     if (res.ok) {
-      alert('Product added successfully')
-      router.push('/admin/product')
+      alert('User inserted successfully')
+      router.push('/admin/users')
     } else {
-      alert('Failed to add product')
+      alert('Failed to insert user')
     }
   } catch (error) {
     console.error('Insert error:', error)
-    alert('Error adding product')
   }
 }
 
 const handleFile = async (e) => {
-  const file = e.target.files[0]
-  if (!file) return
+  const file = e.target.files[0];
+  const formData = new FormData();
+  formData.append('file', file);
 
-  const formData = new FormData()
-  formData.append('file', file)
+  const res = await fetch('http://localhost:8080/upload/image', {
+    method: 'POST',
+    body: formData
+  });
 
-  try {
-    const res = await fetch('http://localhost:8080/upload/image', {
-      method: 'POST',
-      body: formData
-    })
-    const data = await res.json()
+  const data = await res.json();
+  console.log(data.imagePath); // oss/images/xxx.jpg
 
-    console.log('Image uploaded to:', data.imagePath)
-    form.value.image = data.imagePath
-  } catch (error) {
-    console.error('Image upload failed:', error)
-  }
-}
+  // ✅ 将图片路径写入 form.image
+  form.value.image = data.imagePath;
+};
 </script>
 
 <style scoped src="@/assets/initial.css"></style>
 <style scoped src="@/assets/insert.css"></style>
-

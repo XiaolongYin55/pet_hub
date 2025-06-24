@@ -52,8 +52,8 @@
           <div class="field-group">
             <label>Status:</label>
             <select v-model="contract.status">
-              <option :value="0">Pending</option>
-              <option :value="1">Publish</option>
+              <!-- <option :value="0">Pending</option> -->
+              <option :value="0">Publish</option>
             </select>
           </div>
             <div class="field-group">

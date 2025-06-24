@@ -26,7 +26,7 @@ import EventManage from '@/admin_pages/EventManage.vue';
 import EventUpdate from '@/admin_pages/EventUpdate.vue';
 import EventInsert from '@/admin_pages/EventInsert.vue';
 import Orders from '@/admin_pages/Orders.vue';
-
+import AdoptionManage from '@/admin_pages/AdoptionManage.vue';
 
 
 import Wearables from '@/admin_pages/Wearables.vue';
@@ -178,10 +178,11 @@ const routes = [
         name: 'AdminOrders',
         component: Orders,
       },
+      //* -------------- ADOPTION MANAGEMENT -------------------
       {
-        path: 'accessories',
-        name: 'AdminAccessories',
-        component: Accessories,
+        path: 'adoption_manage',
+        name: 'AdoptionManage',
+        component: AdoptionManage,
       },
       {
         path: 'wearables',
