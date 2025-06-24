@@ -1,7 +1,7 @@
 <template>
   <div class="event-insert">
     <h2>Add New Event</h2>
-    <form @submit.prevent="submitUpdate" class="resource-insert-form">
+    <form @submit.prevent="submitInsert" class="resource-insert-form">
       <div>
         <label>Title:</label>
         <input v-model="form.title" type="text" required />
@@ -10,9 +10,14 @@
         <label>Description:</label>
         <textarea v-model="form.description" required></textarea>
       </div>
-      <div>
+      <div class="field-group">
         <label>Image:</label>
-        <input v-model="form.image" type="text" />
+        <input type="file" @change="handleFile" style="max-width: 400px;" />
+        <img
+          v-if="form.image"
+          :src="`http://localhost:8081/${form.image}`"
+          style="width: 150px; margin-top: 10px"
+        />
       </div>
       <div>
         <label>Publisher:</label>
@@ -45,34 +50,44 @@ const submitInsert = async () => {
       body: JSON.stringify(form.value)
     })
     if (res.ok) {
-      alert('Event added successfully')
+      alert('✅ Event added successfully')
       router.push('/admin/events')
     } else {
-      alert('Failed to add event')
+      const errData = await res.json()
+      alert('❌ Failed to add event: ' + (errData.message || res.statusText))
     }
   } catch (error) {
     console.error('Insert error:', error)
-    alert('Error adding event')
+    alert('❌ Error adding event')
   }
 }
 
 const handleFile = async (e) => {
-  const file = e.target.files[0];
-  const formData = new FormData();
-  formData.append('file', file);
+  const file = e.target.files[0]
+  if (!file) return
 
-  const res = await fetch('http://localhost:8080/upload/image', {
-    method: 'POST',
-    body: formData
-  });
+  const formData = new FormData()
+  formData.append('file', file)
 
-  const data = await res.json();
-  console.log(data.imagePath); // oss/images/xxx.jpg
+  try {
+    const res = await fetch('http://localhost:8080/upload/image', {
+      method: 'POST',
+      body: formData
+    })
 
-  // ✅ 将图片路径写入 form.image
-  form.value.image = data.imagePath;
-};
+    const data = await res.json()
+    if (data.imagePath) {
+      form.value.image = data.imagePath
+    } else {
+      alert('❌ Image upload failed')
+    }
+  } catch (err) {
+    console.error('Upload error:', err)
+    alert('❌ Upload failed')
+  }
+}
 </script>
+
 <style scoped src="@/assets/user-home.css"></style>
 <style scoped src="@/assets/initial.css"></style>
 <style scoped src="@/assets/insert.css"></style>

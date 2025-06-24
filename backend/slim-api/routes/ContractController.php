@@ -43,18 +43,20 @@ return function ($app, $pdo) {
         return $response->withHeader('Content-Type', 'application/json');
     });
 
-    $app->get('/user/get/contract/by_user/{user_id}', function (Request $request, Response $response, array $args) use ($service) {
-        $userId = $args['user_id'];
-        $contract = $service->getContractByUserId($userId);
+// routes/ContractController.php
+$app->get('/user/get/contracts/by_user/{user_id}', function (Request $request, Response $response, array $args) use ($service) {
+    $userId = $args['user_id'];
+    $contracts = $service->getContractsByUserId($userId);
 
-        if ($contract) {
-            $response->getBody()->write(json_encode($contract));
-            return $response->withHeader('Content-Type', 'application/json');
-        } else {
-            $response->getBody()->write(json_encode(["error" => "Contract not found for user_id: $userId"]));
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
-        }
-    });
+    if ($contracts && count($contracts) > 0) {
+        $response->getBody()->write(json_encode($contracts));
+        return $response->withHeader('Content-Type', 'application/json');
+    } else {
+        $response->getBody()->write(json_encode(["error" => "No contracts found for user_id: $userId"]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
+    }
+});
+
 
     // ✅ 添加 POST /update/contract 到 routes/ContractController.php
     $app->post('/user/update/contract', function (Request $request, Response $response) use ($service) {

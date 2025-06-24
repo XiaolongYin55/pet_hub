@@ -28,8 +28,41 @@ return function ($app, $pdo) {
         }
     });
 
+        $app->get('/user/get/user/{id}', function (Request $request, Response $response, array $args) use ($service) {
+        $id = $args['id'];
+        $user = $service->getUserById($id);
+
+        if ($user) {
+            $response->getBody()->write(json_encode($user));
+            return $response->withHeader('Content-Type', 'application/json');
+        } else {
+            $response->getBody()->write(json_encode(["error" => "User not found"]));
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
+        }
+    });
+
     // ✅ 添加 POST /users/update 到 routes/UserController.php
     $app->post('/admin/update/user', function (Request $request, Response $response) use ($service) {
+        $data = json_decode($request->getBody()->getContents(), true);
+
+        if (!isset($data['id'])) {
+            $response->getBody()->write(json_encode(["error" => "Missing user ID"]));
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+        }
+
+        $success = $service->updateUserWithAddress($data);
+
+        if ($success) {
+            $response->getBody()->write(json_encode(["message" => "User and address updated"]));
+            return $response->withHeader('Content-Type', 'application/json');
+        } else {
+            $response->getBody()->write(json_encode(["error" => "Update failed"]));
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+        }
+    });
+
+        // ✅ 添加 POST /users/update 到 routes/UserController.php
+    $app->post('/user/update', function (Request $request, Response $response) use ($service) {
         $data = json_decode($request->getBody()->getContents(), true);
 
         if (!isset($data['id'])) {

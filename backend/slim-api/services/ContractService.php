@@ -21,11 +21,10 @@ class ContractService
     {
         return $this->contractRepo->getContractById($id);
     }
-    public function getContractByUserId($userId)
-    {
-        return $this->contractRepo->getContractByUserId($userId);
-    }
-
+public function getContractsByUserId($userId)
+{
+    return $this->contractRepo->getContractsByUserId($userId);
+}
 
     public function addContract($data)
     {

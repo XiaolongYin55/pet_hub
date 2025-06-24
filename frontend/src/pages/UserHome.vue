@@ -12,8 +12,9 @@
       <aside class="side_bar">
         <ul>
           <li><router-link to="/user/products">Products</router-link></li>
-          <li><router-link to="/user/accessories">Pets</router-link></li>
-          <li><router-link to="/user/publish">Publish</router-link></li>
+          <li><router-link to="/user/adoptions">Adoption Info</router-link></li>
+          <li><router-link to="/user/owner_publish">Publish Adoption</router-link></li>
+          <li><router-link to="/user/my_publish">My Publish</router-link></li>
           <li><router-link to="/user/order_history">Orders</router-link></li>
           <li><router-link to="/user/news">News</router-link></li>
           <li><router-link to="/user/cart">My Cart</router-link></li>

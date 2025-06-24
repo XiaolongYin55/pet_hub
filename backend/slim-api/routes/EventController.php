@@ -16,6 +16,12 @@ return function ($app, $pdo) {
         return $response->withHeader('Content-Type', 'application/json');
     });
 
+    $app->get('/user/get/events', function (Request $request, Response $response) use ($service) {
+        $events = $service->getEvents();
+        $response->getBody()->write(json_encode($events));
+        return $response->withHeader('Content-Type', 'application/json');
+    });
+
     // 根据 ID 获取单个事件
     $app->get('/admin/get/event/{id}', function (Request $request, Response $response, array $args) use ($service) {
         $id = $args['id'];

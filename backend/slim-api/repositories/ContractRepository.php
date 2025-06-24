@@ -23,12 +23,12 @@ class ContractRepository
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function getContractByUserId($userId)
-    {
-        $stmt = $this->pdo->prepare("SELECT * FROM contracts WHERE owner_id = :user_id ORDER BY create_time DESC LIMIT 1");
-        $stmt->execute([':user_id' => $userId]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
+public function getContractsByUserId($userId)
+{
+    $stmt = $this->pdo->prepare("SELECT * FROM contracts WHERE owner_id = :user_id ORDER BY create_time DESC");
+    $stmt->execute([':user_id' => $userId]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC); // 👈 fetchAll 返回多个
+}
 
     public function addContract($data)
     {

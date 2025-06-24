@@ -7,6 +7,11 @@ import UserProduct from '@/pages/user_pages/UserProduct.vue';
 import MyCart from '@/pages/user_pages/MyCart.vue';
 import Payment from '@/pages/user_pages/Payment.vue';
 import OrderHistory from '@/pages/user_pages/OrderHistory.vue';
+import AdoptionInfo from '@/pages/user_pages/AdoptionInfo.vue';
+import OwnerPublish from '@/pages/user_pages/OwnerPublish.vue';
+import ApplyAdoption from '@/pages/user_pages/ApplyAdoption.vue';
+import MyPublish from '@/pages/user_pages/MyPublish.vue';
+import ConfirmAdoption from '@/pages/user_pages/ConfirmAdoption.vue';
 
 import AdminHome from '@/pages/AdminHome.vue';
 import Dashboard from '../pages/Dashboard.vue';
@@ -61,20 +66,36 @@ const routes = [
         name: 'Payment',
         component: Payment,
       },
-          {
+    {
       path: 'order_history',
       name: 'OrderHistory',
       component: OrderHistory,
     },
+          //* -------------- ADOPTION SECTION ---------------------
       {
-        path: 'smartphones',
-        name: 'Smartphones',
-        component: UserManage,
+        path: 'adoptions',
+        name: 'AdoptionInfo',
+        component: AdoptionInfo,
       },
       {
-        path: 'accessories',
-        name: 'Accessories',
-        component: Accessories,
+        path: 'owner_publish',
+        name: 'OwnerPublish',
+        component: OwnerPublish,
+      },
+      {
+        path: 'application',
+        name: 'ApplyAdoption',
+        component: ApplyAdoption,
+      },
+      {
+        path: 'my_publish',
+        name: 'MyPublish',
+        component: MyPublish,
+      },
+      {
+        path: 'confirm',
+        name: 'ConfirmAdoption',
+        component: ConfirmAdoption,
       },
 
       {
